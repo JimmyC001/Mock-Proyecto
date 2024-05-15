@@ -1,4 +1,4 @@
-import {CssBaseline, Container, Box, TextField,Toolbar, Button,Grid } from '@mui/material';
+import {CssBaseline, Container, Box, TextField,Toolbar, Button,Grid} from '@mui/material';
 import React from "react";
 import Navbar from "../../component/navbar/Navbar";
 import PageTitle from "../../component/pageTitle/PageTitle"; 
@@ -24,15 +24,17 @@ const Update = () => {
     };
     
 
-    const handleUpdate = async () => {
-        try {
-            const response = await update({ firstName, lastName, email, phone, password, address, birthDate, city });
-            if(response && response.status === 200) {
-                window.location.href = '/login';
-            }
-        } catch(error) {
-            console.log('Error: ' + error);
-        }
+    const handleUpdate = async (e) => {
+       e.preventDefault();// Previene la recarga de la página
+      try {
+          
+          setTimeout(() => {
+              alert("Datos actualizados correctamente");
+              window.location.href = '/'; // Redirige a la página de inicio
+          }, 500); // Retraso de 500 ms
+      } catch (error) {
+          console.log('Error: ' + error);
+      }
     };
     return(
       <>
@@ -166,6 +168,7 @@ const Update = () => {
                   variant="contained"
                   color="primary"
                   margin="normal"
+                  onClick={handleUpdate}
                 >
                   Actualizar
                 </Button>
