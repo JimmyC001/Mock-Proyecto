@@ -1,0 +1,12 @@
+.button {
+    padding: 10px;
+    border: none;
+    border-radius: 999px;
+    color: #fff;
+    background-color: #478ac9;
+    min-width: 250px;
+}
+
+.button > * {
+    color: #fff;
+}

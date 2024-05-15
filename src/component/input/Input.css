@@ -1,0 +1,14 @@
+.input-container {
+    width: 500px;
+}
+
+.input-name {
+    display: block;
+    width: 100%;
+}
+
+.input-field {
+    margin: 0;
+    padding: 10px;
+    border-radius: 10px;
+}
