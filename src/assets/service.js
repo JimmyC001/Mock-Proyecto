@@ -20,12 +20,14 @@ export const add = (service) => {
             let db = event.target.result;
             let transaction = db.transaction(['services'], 'readwrite');
             let objectStore = transaction.objectStore('services');
-            let request = objectStore.add(service);
-            request.onsuccess = () => {
-                // console.log(service);
-                // alert();
-                resolve(service);
-            }
+            const toStore = {
+                title: "Servicio",
+                description: "Servicio",
+                imageUrl: "",
+                ...service
+            };
+            let request = objectStore.add(toStore);
+            request.onsuccess = () => resolve(service);
             request.onerror = (event) => reject(event);
         };
         dbPromise.onerror = (event) => reject(event);
@@ -52,10 +54,7 @@ export const getAll = () => {
 export const get = (clientId) => {
     return new Promise((resolve, reject) => {
         getAll()
-            .then(services => {
-                // console.log(services);
-                resolve(services.filter(s => s.clientId === clientId));
-            })
+            .then(services => resolve(services.filter(s => s.clientId === clientId)))
             .catch(error => reject(error));
     });
 };

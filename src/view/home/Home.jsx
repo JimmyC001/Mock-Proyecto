@@ -4,10 +4,9 @@ import Navbar from "../../component/navbar/Navbar";
 import ServiceCard from "../../component/serviceCard/ServiceCard";
 import PageTitle from "../../component/pageTitle/PageTitle";
 import home from "../../service/client/home";
-import { getAll } from "../../assets/service";
 
 const Home = () => {
-    const [orders, setOrders] = useState([]);
+    const [services, setservices] = useState([]);
     
     useEffect(() => {
         const isLogged = () => {
@@ -15,13 +14,11 @@ const Home = () => {
             return (id)? true: false;
         };
 
-        const fetchOrders = async () => {
+        const fetchservices = async () => {
             try {
-                getAll().then(services => console.log(services));
-                const fetchedOrders = await home();
-                // console.log(fetchedOrders);
-                if (fetchedOrders) {
-                    setOrders(fetchedOrders);
+                const fetchedservices = await home();
+                if (fetchedservices) {
+                    setservices(fetchedservices);
                 } else 
                     console.log('No se encontraron servicios activos');
             } catch (error) {
@@ -29,7 +26,7 @@ const Home = () => {
             }
         };
 
-        if(isLogged()) fetchOrders();
+        if(isLogged()) fetchservices();
         else window.location.href = '/login';
     }, []);
 
@@ -44,9 +41,9 @@ const Home = () => {
                     <h2>Servicios en curso</h2>
                 </Box>
                 <Grid container spacing={2}> {
-                    orders.map((order, index) => (
+                    services.map((service, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
-                            <ServiceCard order={order}/>
+                            <ServiceCard service={service}/>
                         </Grid>
                     ))
                 }</Grid>
