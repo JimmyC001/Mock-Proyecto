@@ -1,7 +1,6 @@
-import { instance } from '../../index';
+import { add } from '../../../assets/users';
 
-
-const register = async ({ firstName, lastName, email, passwordHash, phone, birthDate }) => {
+const register = ({ firstName, lastName, email, passwordHash, phone, birthDate }) => {
     try {
         const body = {
             firstName: firstName || null,
@@ -10,13 +9,22 @@ const register = async ({ firstName, lastName, email, passwordHash, phone, birth
             passwordHash: passwordHash || null,
             birthDate: birthDate || null,
             phoneNumber: phone || null
-        };
-        const response = await instance.post('/auth/register', body); 
-        return response.data;
-    } catch(error) {
-        //console.log('Error en el registro: \n' + error);
+        };        
+        const data = add(body);
+        if(data)
+            return {
+                status: 200,
+                data: data
+            };
+        else
+            return {
+                status: 400,
+                message: "No se realizo el registro"
+            };
+    } catch (error) {
+        console.log('Error en el registro: \n' + error);
+        return null;
     }
-    return null;
 };
 
 export default register;

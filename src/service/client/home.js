@@ -1,13 +1,13 @@
 import { get } from '../../assets/service';
 
-const home = async () => {
+const home = () => {
     try {
-        const id = localStorage.getItem('token');
+        const id = Number(sessionStorage.getItem('token'));
         const response = {
             status: 200,
-            data: get()
+            data: get(id)
         };
-        console.log(response);
+        // console.log(response);
         if (response.status >= 200 && response.status < 300) {
             return response.data;
         } else {

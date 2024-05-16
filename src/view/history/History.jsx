@@ -9,6 +9,10 @@ const History = () => {
     const [orders, setOrders] = useState([]); // Inicia como array vacío
 
     useEffect(() => {
+        const isLogged = () => {
+            const id = sessionStorage.getItem('token');
+            return (id)? true: false;
+        };
         const fetchOrders = async () => {
             try {
                 const fetchedOrders = await history();
@@ -21,7 +25,8 @@ const History = () => {
                 console.log('Error al obtener el historial de servicios: \n' + error.message);
             }
         };
-        fetchOrders();
+        if(isLogged()) fetchOrders();
+        else window.location.href = '/login';
     }, []);
 
     return (

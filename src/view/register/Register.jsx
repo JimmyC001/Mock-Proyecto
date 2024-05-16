@@ -25,16 +25,18 @@ const Register = (event) => {
         setOpenDialog(false);
     };
 
-    const handleRegister = async () => {
-        event.preventDefault();
+    const handleRegister = async (e) => {
+        e.preventDefault();
         if(!dataConsent) {
             alert('Debes aceptar el tratamiento de datos para continuar');
             return;
         }
         try {
-            const response = await register({ firstName, lastName, email, passwordHash, phone, birthDate });
-            if(response && response.status === 200) {
-                
+            const response = register({ firstName, lastName, email, passwordHash, phone, birthDate });
+            // console.log(response);
+            if(response && response.status === 200){
+                console.log(response.data);
+                alert();
                 window.location.href = '/login';
             }
         } catch(error){
@@ -125,27 +127,23 @@ const Register = (event) => {
                                         checked={dataConsent}
                                         onChange={(e) => setDataConsent(e.target.checked)}
                                         name='dataConsent'
-                                    
                                     />
                                 }
                                 label={                            
                                     <Typography variant="body2">
-                                    Acepto el{""}
+                                    Acepto el {" "}
                                     <Button onClick={handleOpenDialog} color="primary" sx={{textTransform: 'none'}}>
                                         tratamiento de datos.
                                     </Button>
                             </Typography>}
                             />
-
-                                
                         </Box>
                         <Button
-                            type="Submit" 
+                            type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             disabled={!dataConsent}
-                            
                         >
                             Registrarme
                         </Button>

@@ -1,8 +1,12 @@
-import { instance } from "../index"; 
+import { get } from '../../assets/service';
 
 const history = async () => {
     try {
-        const response = await instance.get('/api/orders');//revisar ruta
+        const id = sessionStorage.getItem('token');
+        const response = {
+            status: 200,
+            data: get(id)
+        };
         if (response && response.status === 200) {
             return response.data; // Devuelve los datos recibidos directamente
         }

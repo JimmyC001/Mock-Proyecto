@@ -43,7 +43,7 @@ const ProfileMenu = () => {
                     Editar perfil
                 </MenuItem>
                 <MenuItem onClick={ () => {
-                    localStorage.removeItem('token');
+                    sessionStorage.removeItem('token');
                     handleMenuAction('/login')
                 }}>
                     Cerrar sesión

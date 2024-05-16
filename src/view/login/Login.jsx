@@ -10,6 +10,7 @@ import PageTitle from '../../component/pageTitle/PageTitle';
 import LogoDescription from '../../component/logo-description/LogoDescription';
 import Footer from '../../component/footer/Footer';
 import login from '../../service/client/user/login';
+import { getAll } from '../../assets/users';
 
 
 const Login = () => {
@@ -17,7 +18,8 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        const id = localStorage.getItem('token');
+        console.log(getAll());
+        const id = sessionStorage.getItem('token');
         // console.log(id);
         if(id) window.location.href = '/';
     }, []);
@@ -25,11 +27,11 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const data = await login({ email, password });
-            console.log(data);
+            const data = login({email, password});
+            // console.log(data);
             if(data.id){
-                console.log(data.id);
-                localStorage.setItem('token', data.id);
+                // console.log(data.id);
+                sessionStorage.setItem('token', data.id);
                 window.location.href = '/';
             }
         } catch (error) {

@@ -12,16 +12,16 @@ const createService = async (serviceDetails) => {
             height:     height  || null,
             imageUrl:   images  || null
         }));
-        const token = localStorage.getItem('token');
+        const token = Number(sessionStorage.getItem('token'));
         if(token){
             const requestBody = {
-                clientId:                       token           || null,
-                deliveryDate:                   pickUpDate      || null,
-                deliveryAddressLongAddress:     pickUpAddress   || null,
-                deliveryAddressDetails:         addressDetails  || null,
-                receivingAddressLongAddress:    deliveryAddress || null,
-                receivingAddressDetails:        deliveryDetails || null,
-                load:                           formattedItems  || null
+                clientId: token,
+                pickUpDate,
+                pickUpAddress,
+                addressDetails,
+                deliveryAddress,
+                deliveryDetails,
+                formattedItems
             };
             add(requestBody)
             return {

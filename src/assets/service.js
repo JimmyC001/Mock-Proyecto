@@ -1,34 +1,24 @@
+var services = [];
+
 export const init = () => {
-    localStorage.setItem('services', JSON.stringify([
-        {
-            id: 1,
-            title: "Titulo 1",
-            description: "Un servicio"
-        }
-    ]));
+    services = [
+        { clientId: 1, title: "Servicio 1", description: "Nevera industrial", imageurl: "" }
+    ];
 };
 
 export const add = (service) => {
-    let stored = localStorage.getItem('services');
-    if(stored){
-        let services = JSON.parse(stored);
-        services.push(service);
-        console.log(services);
-        localStorage.setItem('services', JSON.stringify(services));
-        return true;
-    }
-    return false;
+    services.push({
+        title: "Servicio " + services.length,
+        description: "Un servicio",
+        imageUrl: "",
+        ...service
+    });
+    return service;
 };
 
-// Get a user from the list in localStorage
-export const get = (client = null) => {
-    let stored = localStorage.getItem('services');
-    if (stored) {
-        let services = JSON.parse(stored);
-        // Find the user matching the given email and password
-        return (client)
-            ? services.filter(s => client === s.clientId)
-            : services;
-    }
-    return null; // Return null if no users are stored
+// Get a user from the list in sessionStorage
+export const get = (client) => {
+    const filtered = services.filter((s) => s.clientId === client);
+    console.log(filtered);
+    return (client)? filtered: services;
 };

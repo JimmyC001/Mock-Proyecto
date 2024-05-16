@@ -1,6 +1,6 @@
 import { get } from '../../../assets/users';
 
-const login = async ({ email, password }) => {
+const login = ({ email, password }) => {
     try{
         const result = get({ email, password });
         if(result)

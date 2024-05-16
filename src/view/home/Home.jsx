@@ -10,13 +10,13 @@ const Home = () => {
     
     useEffect(() => {
         const isLogged = () => {
-            const id = localStorage.getItem('token');
+            const id = sessionStorage.getItem('token');
             return (id)? true: false;
         };
 
         const fetchOrders = async () => {
             try {
-                const fetchedOrders = await home();
+                const fetchedOrders = home();
                 if (fetchedOrders) {
                     setOrders(fetchedOrders);
                 } else 
