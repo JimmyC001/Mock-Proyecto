@@ -2,7 +2,7 @@ import { get } from '../../assets/service';
 
 const history = async () => {
     try {
-        const id = sessionStorage.getItem('token');
+        const id = Number(sessionStorage.getItem('token'));
         const response = {
             status: 200,
             data: get(id)
