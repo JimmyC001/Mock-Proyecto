@@ -6,7 +6,7 @@ const register = ({ firstName, lastName, email, passwordHash, phone, birthDate }
             firstName: firstName || null,
             lastName: lastName || null,
             email: email || null,
-            passwordHash: passwordHash || null,
+            passwordHash: String(passwordHash) || null,
             birthDate: birthDate || null,
             phoneNumber: phone || null
         };        

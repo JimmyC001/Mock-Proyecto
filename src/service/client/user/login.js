@@ -1,14 +1,16 @@
 import { get } from '../../../assets/users';
 
-const login = ({ email, password }) => {
+const login = async ({ email, password }) => {
     try{
-        const result = get({ email, password });
-        if(result)
+        const result = await get({ email, password });
+        if(result){
+            // console.log(result);
             return { id: result.id };
+        }
         else
             return null;
     } catch(error){
-        console.log('Login Fallido: \n' + error.message);
+        console.error('Login Fallido: \n' + error.message);
     }
 };
 

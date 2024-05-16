@@ -4,6 +4,7 @@ import Navbar from "../../component/navbar/Navbar";
 import ServiceCard from "../../component/serviceCard/ServiceCard";
 import PageTitle from "../../component/pageTitle/PageTitle";
 import home from "../../service/client/home";
+import { getAll } from "../../assets/service";
 
 const Home = () => {
     const [orders, setOrders] = useState([]);
@@ -16,7 +17,9 @@ const Home = () => {
 
         const fetchOrders = async () => {
             try {
-                const fetchedOrders = home();
+                getAll().then(services => console.log(services));
+                const fetchedOrders = await home();
+                // console.log(fetchedOrders);
                 if (fetchedOrders) {
                     setOrders(fetchedOrders);
                 } else 

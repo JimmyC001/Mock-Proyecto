@@ -23,7 +23,7 @@ const createService = async (serviceDetails) => {
                 deliveryDetails,
                 formattedItems
             };
-            add(requestBody);
+            await add(requestBody);
             return {
                 status: 200,
                 data: requestBody

@@ -1,29 +1,61 @@
-var services = [];
-
 export const init = () => {
-    services = [
-        { clientId: 1, serviceId: 1, title: "Servicio 1", description: "Nevera industrial", imageurl: "" }
-    ];
+    // window.indexedDB.deleteDatabase('serviceDB');
+    let dbPromise = window.indexedDB.open('serviceDB', 1);
+    dbPromise.onupgradeneeded = (event) => {
+        let db = event.target.result;
+        if (!db.objectStoreNames.contains('services')) {
+            let objectStore = db.createObjectStore('services', { keyPath: 'id', autoIncrement: true });
+            objectStore.createIndex('clientId', 'clientId', { unique: false });
+        }
+    };
+    dbPromise.onerror = (event) => {
+        console.error('IndexedDB error:', event.target.errorCode);
+    };
 };
 
 export const add = (service) => {
-    services.push({
-        title: "Servicio " + services.length,
-        description: "Un servicio",
-        imageUrl: "",
-        ...service
+    return new Promise((resolve, reject) => {
+        const dbPromise = window.indexedDB.open('serviceDB', 1);
+        dbPromise.onsuccess = (event) => {
+            let db = event.target.result;
+            let transaction = db.transaction(['services'], 'readwrite');
+            let objectStore = transaction.objectStore('services');
+            let request = objectStore.add(service);
+            request.onsuccess = () => {
+                // console.log(service);
+                // alert();
+                resolve(service);
+            }
+            request.onerror = (event) => reject(event);
+        };
+        dbPromise.onerror = (event) => reject(event);
     });
-    return service;
 };
 
-// Get a user from the list in sessionStorage
-export const get = (client) => {
-    const filtered = services.filter((s) => s.clientId === client);
-    console.log(filtered);
-    return (client)? filtered: services;
+export const getAll = () => {
+    return new Promise((resolve, reject) => {
+        const dbPromise = window.indexedDB.open('serviceDB', 1);
+        dbPromise.onsuccess = (event) => {
+            let db = event.target.result;
+            let transaction = db.transaction(['services'], 'readonly');
+            let objectStore = transaction.objectStore('services');
+            let getAllRequest = objectStore.getAll();
+            getAllRequest.onsuccess = (event) => {
+                resolve(event.target.result);
+            };
+            getAllRequest.onerror = (event) => reject(event);
+        };
+        dbPromise.onerror = (event) => reject(event);
+    });
 };
 
-export const getByServiceId = (service) => {
-    const founded = services.find(s => s.serviceId === service);
-    return (founded)? founded: null;
+export const get = (clientId) => {
+    return new Promise((resolve, reject) => {
+        getAll()
+            .then(services => {
+                // console.log(services);
+                resolve(services.filter(s => s.clientId === clientId));
+            })
+            .catch(error => reject(error));
+    });
 };

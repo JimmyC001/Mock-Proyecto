@@ -18,19 +18,16 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        console.log(getAll());
+        getAll().then(services => console.log(services));
         const id = sessionStorage.getItem('token');
-        // console.log(id);
         if(id) window.location.href = '/';
     }, []);
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const data = login({email, password});
-            // console.log(data);
+            const data = await login({email, password});
             if(data.id){
-                // console.log(data.id);
                 sessionStorage.setItem('token', data.id);
                 window.location.href = '/';
             }
