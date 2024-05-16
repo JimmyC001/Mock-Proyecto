@@ -4,8 +4,9 @@ import Navbar from "../../component/navbar/Navbar";
 import Rating from '@mui/material/Rating';
 import CardDriver from "../../component/cardDriver/CardDriver"; 
 import PageTitle from "../../component/pageTitle/PageTitle";
-import getDriverInfo from "../../service/service/driver/getDriverInfo";
+//import getDriverInfo from "../../service/service/driver/getDriverInfo";
 import rateDriver from "../../service/service/driver/rateDriver";
+import { getDriverInfo, initDriver } from "../../assets/driver";
 
 const RateDriver = () => {
     const [driverInfo, setDriverInfo] = useState({
@@ -18,14 +19,20 @@ const RateDriver = () => {
     const [rating, setRating] = useState(0);
 
     useEffect(() => {
-        const fetchDriverInfo = async () => {
-            try {
-                const data = await getDriverInfo(); // Asumiendo que esta función devuelve la información del conductor
-                if (data) setDriverInfo(data);
-            } catch (error) {
-                console.log('Error al obtener la información del conductor:', error.message);
+        initDriver(); 
+        console.log("Verificando datos después de inicializar:", localStorage.getItem('driver'));
+
+        const fetchDriverInfo = () => {
+            const driver = getDriverInfo();
+            console.log("Driver retrieved:", driver);
+            if (driver) {
+                setDriverInfo(driver);
+            } else {
+                console.log('No se encontró la información del conductor');
             }
+
         };
+        
         fetchDriverInfo();
     }, []);
 
@@ -33,13 +40,16 @@ const RateDriver = () => {
         setRating(newValue);
     };
 
-    const handleSubmit = async () => {
-        // Envío de la calificación al backend
-        const response = await rateDriver({ driverId: driverInfo.id, rating }); // Asumiendo que `id` es parte de la información del conductor
-        if (response.success) {
-            console.log("Calificación enviada con éxito.");
-        } else {
-            console.error("Error al enviar la calificación:", response.error);
+    const handleSubmit = async (e) => {
+        e.preventDefault();// Previene la recarga de la página
+        try {
+            
+            setTimeout(() => {
+                alert("Calificación enviada correctamente");
+                window.location.href = '/'; // Redirige a la página de inicio
+            }, 500); // Retraso de 500 ms
+        } catch (error) {
+            console.log('Error: ' + error);
         }
     };
 
