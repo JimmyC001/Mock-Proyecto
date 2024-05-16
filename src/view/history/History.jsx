@@ -4,20 +4,22 @@ import Navbar from "../../component/navbar/Navbar";
 import ServiceCard from "../../component/serviceCard/ServiceCard";
 import PageTitle from "../../component/pageTitle/PageTitle";
 import history from "../../service/client/history";
+import { getAll } from "../../assets/service";
 
 const History = () => {
-    const [orders, setOrders] = useState([]); // Inicia como array vacío
+    const [services, setservices] = useState([]); // Inicia como array vacío
 
     useEffect(() => {
         const isLogged = () => {
+            getAll().then(services => console.log(services));
             const id = sessionStorage.getItem('token');
             return (id)? true: false;
         };
-        const fetchOrders = async () => {
+        const fetchservices = async () => {
             try {
-                const fetchedOrders = await history();
-                if (fetchedOrders) {
-                    setOrders(fetchedOrders);
+                const fetchedservices = await history();
+                if (fetchedservices) {
+                    setservices(fetchedservices);
                 } else {
                     console.log('No se encontraron órdenes.');
                 }
@@ -25,7 +27,7 @@ const History = () => {
                 console.log('Error al obtener el historial de servicios: \n' + error.message);
             }
         };
-        if(isLogged()) fetchOrders();
+        if(isLogged()) fetchservices();
         else window.location.href = '/login';
     }, []);
 
@@ -37,9 +39,9 @@ const History = () => {
             <Container>
                 <PageTitle title="Historial de Servicios" />
                 <Grid container spacing={2}>
-                    {orders.map((order) => (
-                        <Grid item xs={12} sm={6} md={4} key={order.id}>
-                            <ServiceCard title={order.title} description={order.description} imageUrl={order.imageUrl} />
+                    {services.map((service) => (
+                        <Grid item xs={12} sm={6} md={4} key={service.id}>
+                            <ServiceCard id = { service.id } title={service.title} description={service.description} imageUrl={service.imageUrl} />
                         </Grid>
                     ))}
                 </Grid>

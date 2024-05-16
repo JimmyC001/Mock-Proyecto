@@ -35,7 +35,7 @@ const App = () => {
                     <Route path='/history' Component={History}/>
                     <Route path='/driverFound' Component={DriverFound}/>
                     <Route path='/searchingDriver' Component={SearchingDriver}/>
-                    <Route path='/serviceDetails' Component={ServiceDetails}/>
+                    <Route path='/serviceDetails/:serviceId' Component={ServiceDetails}/>
                     <Route path='/rateDriver' Component={RateDriver}/>
                     <Route path='*' Component={NotFound}/>
                 </Routes>

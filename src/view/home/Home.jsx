@@ -4,6 +4,7 @@ import Navbar from "../../component/navbar/Navbar";
 import ServiceCard from "../../component/serviceCard/ServiceCard";
 import PageTitle from "../../component/pageTitle/PageTitle";
 import home from "../../service/client/home";
+import { getAll } from "../../assets/service";
 
 const Home = () => {
     const [services, setservices] = useState([]);
@@ -16,6 +17,7 @@ const Home = () => {
 
         const fetchservices = async () => {
             try {
+                getAll().then(services => console.log(services));
                 const fetchedservices = await home();
                 if (fetchedservices) {
                     setservices(fetchedservices);
@@ -40,13 +42,13 @@ const Home = () => {
                 <Box sx={{mt: 4, mb: 4}}>
                     <h2>Servicios en curso</h2>
                 </Box>
-                <Grid container spacing={2}> {
-                    services.map((service, index) => (
-                        <Grid item xs={12} sm={6} md={4} key={index}>
-                            <ServiceCard service={service}/>
+                <Grid container spacing={2}>
+                    {services.map((service) => (
+                        <Grid item xs={12} sm={6} md={4} key={service.id}>
+                            <ServiceCard id = { service.id } title={service.title} description={service.description} imageUrl={service.imageUrl} />
                         </Grid>
-                    ))
-                }</Grid>
+                    ))}
+                </Grid>
             </Container>
         </>
     );

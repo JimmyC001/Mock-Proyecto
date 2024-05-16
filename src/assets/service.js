@@ -23,7 +23,7 @@ export const add = (service) => {
             const toStore = {
                 title: "Servicio",
                 description: "Servicio",
-                imageUrl: "",
+                imageUrl: __dirname + "../images/truck.jpg",
                 ...service
             };
             let request = objectStore.add(toStore);
@@ -55,6 +55,14 @@ export const get = (clientId) => {
     return new Promise((resolve, reject) => {
         getAll()
             .then(services => resolve(services.filter(s => s.clientId === clientId)))
+            .catch(error => reject(error));
+    });
+};
+
+export const getById = (serviceId) => {
+    return new Promise((resolve, reject) => {
+        getAll()
+            .then(services => resolve(services.find(s => s.id === serviceId)))
             .catch(error => reject(error));
     });
 };

@@ -31,8 +31,10 @@ const CreateService = () => {
         const serviceDetails = {
             pickUpDate,
             pickUpAddress,
+            pickUpDetails: addressDetails,
             addressDetails,
             deliveryAddress,
+            deliveryDate,
             deliveryDetails,
             items
         };

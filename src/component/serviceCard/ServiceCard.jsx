@@ -2,7 +2,12 @@ import React from "react";
 import { Card, CardMedia, CardContent, CardActions,Typography, Button } from '@mui/material';
 
 
-const ServiceCard = ({ title, description, imageUrl }) => {
+const ServiceCard = ({ id,  title, description, imageUrl }) => {
+    const cardHandler = (e) => {
+        e.preventDefault();
+        alert('/serviceDetails/' + id);
+        window.location.href = '/serviceDetails/' + id;
+    };
     return(
         <>
             <Card>
@@ -21,7 +26,7 @@ const ServiceCard = ({ title, description, imageUrl }) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Saber más</Button>
+                    <Button onClick={cardHandler} size="small">Saber más</Button>
                 </CardActions>
             </Card>
         </>

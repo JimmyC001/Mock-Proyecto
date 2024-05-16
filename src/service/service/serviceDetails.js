@@ -1,12 +1,11 @@
-import { get } from "../../assets/service";
+import { getById } from "../../assets/service";
 
 
 const getServiceDetails = async (serviceId) => {
     try {
-
         const response = {
             status: 200,
-            data: get(serviceId)
+            data: await getById(serviceId)
         };
         if (response && response.status === 200) {
             return response.data; // Devuelve los datos recibidos directamente

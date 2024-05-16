@@ -3,7 +3,7 @@ import { add } from '../../assets/service';
 
 const createService = async (serviceDetails) => {
     try {
-        const { pickUpDate, pickUpAddress, addressDetails, deliveryAddress, deliveryDetails, items } = serviceDetails;
+        const { pickUpDate, pickUpAddress, pickUpdetails, addressDetails, deliveryAddress, deliveryDate, deliveryDetails, items } = serviceDetails;
         const formattedItems = items.map(({name, details, length, width, height, images}) => ({
             name:       name    || null,
             details:    details || null,
@@ -18,8 +18,10 @@ const createService = async (serviceDetails) => {
                 clientId: token,
                 pickUpDate,
                 pickUpAddress,
+                pickUpdetails,
                 addressDetails,
                 deliveryAddress,
+                deliveryDate,
                 deliveryDetails,
                 formattedItems
             };
