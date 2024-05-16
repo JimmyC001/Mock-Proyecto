@@ -1,8 +1,13 @@
-import { instance } from "../index"; 
+import { get } from "../../assets/service";
+
 
 const getServiceDetails = async (serviceId) => {
     try {
-        const response = await instance.get(`/service/${serviceId}`);
+
+        const response = {
+            status: 200,
+            data: get(serviceId)
+        };
         if (response && response.status === 200) {
             return response.data; // Devuelve los datos recibidos directamente
         }
